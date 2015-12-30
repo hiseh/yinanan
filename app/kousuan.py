@@ -29,7 +29,9 @@ class KouSuan:
                 question += str(e)
                 if i < len(elements) - 1:
                     question += option
-                    if ('-' in option) and (e % 10 < elements[i + 1] % 10):
+                    if (not sub_carry) and ('-' in option) and (e % 10 < elements[i + 1] % 10):
+                        break
+                    if (not add_carry) and ('+' in option) and (e % 10 + elements[i + 1] % 10 >= 10):
                         break
                 else:
                     if eval(question) <= max_:
