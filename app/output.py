@@ -17,18 +17,16 @@ class Excel:
         """
         输出成excel
         :param file_path:
-        :param input:
+        :param questions:
         :return:
         """
         wb = Workbook()
         ws = wb.create_sheet(title='questions')
         for i, e in enumerate(Excel.grouped(questions, 4)):
             for c, q in enumerate(e):
-                # print('{column}{line}'.format(column=''.join(chr(65 + c)), line=i + 1))
                 ws['{column}{line}'.format(column=''.join(chr(65 + c)), line=i + 1)] = q
 
-
-        wb.save(filename=file_path)
+        return wb.save(filename=file_path)
 
 
 class Test(TestCase):
@@ -39,4 +37,5 @@ class Test(TestCase):
         print(datetime.now() - self.start)
 
     def test_excel_output(self):
-        result = Excel.output('/Users/hisehyin/temp/an.xlsx', KouSuan.gen_add_sub_questions(300, 20))
+        result = Excel.output('/Users/hisehyin/temp/an.xlsx', KouSuan.gen_add_sub_questions(1000, 20, 10, 0, True, False))
+        print(result)

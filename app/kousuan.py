@@ -34,7 +34,7 @@ class KouSuan:
                     if (not add_carry) and ('+' in option) and (e % 10 + elements[i + 1] % 10 >= 10):
                         break
                 else:
-                    if eval(question) <= max_:
+                    if 0 <= eval(question) <= max_:
                         if ('+' in question) and eval(question) < min_:
                             continue
                         yield question + ' = '
