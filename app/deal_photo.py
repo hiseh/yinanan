@@ -3,10 +3,11 @@ import mimetypes
 import os
 import shutil
 import sys
+import uuid
 
 from PIL import Image
 
-from tps.converter.ffmpeg import FFMpeg
+from tps.converter import FFMpeg
 
 __author__ = 'hiseh'
 __datetime__ = 2017 / 2 / 6
@@ -47,7 +48,8 @@ class Photo:
                     else:
                         file_list = os.path.splitext(file)
                         new_path = '{path}/{file}'.format(path=aim_path,
-                                                          file=''.join((file_list[0] + '_2', file_list[1])))
+                                                          file=''.join((file_list[0] + '_' + uuid.uuid4().hex,
+                                                                        file_list[1])))
                         shutil.move(original_path, new_path)
                         print('renamed', original_path, 'to', new_path)
 
