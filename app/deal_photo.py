@@ -75,6 +75,28 @@ class Photo:
                         pass
 
     @staticmethod
+    def remove_repeat(path):
+        """
+        删除重复图片
+        :param path:
+        :return:
+        """
+        unique_files = set()
+        for root, _, files in os.walk(path):
+            for file in files:
+                file_path = '{root}/{file}'.format(root=root, file=file)
+                file_md5 = Photo.md5_file(file_path)
+                if file_md5 in unique_files:
+                    try:
+                        os.remove(file_path)
+                        print('removed', file_path)
+                    except OSError:
+                        pass
+                else:
+                    print('\tunique file', file_path)
+                    unique_files.add(file_md5)
+
+    @staticmethod
     def getctime(file):
         """
         获取创建日期
@@ -120,8 +142,9 @@ if __name__ == '__main__':
         print('一个整理照片/视频的脚本\n'
               '能够根据照片和视频的拍摄日期自动归纳整理到相应月份文件夹里，如果有同名照片/视频，'
               '可以判断内容是否一样，不一样的话，会改名保存\n'
-              'python deal_photo.py original_path aim_path')
-    else:
-        original_path = args[0]
-        aim_path = args[1]
-        Photo.clear_up(original=original_path, aim=aim_path)
+              '-mv moving files python deal_photo.py -mv original_path aim_path\n'
+              '-cl cleaning up repeat files python deal_photo.py -cl path')
+    elif '-mv' in args:
+        Photo.clear_up(original=args[1], aim=args[2])
+    elif '-cl' in args:
+        Photo.remove_repeat(args[1])
