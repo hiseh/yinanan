@@ -22,7 +22,7 @@ class Excel:
         """
         wb = Workbook()
         ws = wb.create_sheet(title='questions')
-        for i, e in enumerate(Excel.grouped(questions, 4)):
+        for i, e in enumerate(Excel.grouped(questions, 5)):
             for c, q in enumerate(e):
                 ws['{column}{line}'.format(column=''.join(chr(65 + c)), line=i + 1)] = q
 
@@ -37,5 +37,5 @@ class Test(TestCase):
         print(datetime.now() - self.start)
 
     def test_excel_output(self):
-        result = Excel.output('/Users/hisehyin/temp/an.xlsx', KouSuan.gen_add_sub_questions(1000, 20, 10, 0, True, False))
+        result = Excel.output('/Users/hiseh/temp/an.xlsx', KouSuan.gen_add_sub_questions(1200, 100, 9, 0, True, True))
         print(result)

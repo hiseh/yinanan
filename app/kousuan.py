@@ -45,12 +45,12 @@ class Test(TestCase):
     def setUp(self):
         self.start = datetime.now()
         self.total = 100
-        self.max = 20
+        self.max = 100
 
     def tearDown(self):
         print(datetime.now() - self.start)
 
     def test_simple_question(self):
-        result = KouSuan.gen_add_sub_questions(self.total, self.max, 10, 0, True, False)
+        result = KouSuan.gen_add_sub_questions(self.total, self.max, 10, 0, True, True)
         for i, e in enumerate(result):
             print(e)

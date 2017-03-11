@@ -19,4 +19,4 @@ def gen_schulte_grid(grid):
 
 
 if __name__ == '__main__':
-    gen_schulte_grid(5)
+    gen_schulte_grid(6)
