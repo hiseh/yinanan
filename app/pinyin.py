@@ -1,4 +1,4 @@
-import xpinyin
+from xpinyin import Pinyin
 
 __author__ = 'hiseh'
 __datetime__ = 2017 / 3 / 4
@@ -21,7 +21,7 @@ def split_four(pinyin):
 
 
 if __name__ == '__main__':
-    p = xpinyin.Pinyin()
+    p = Pinyin()
     out = [p.get_pinyin(w, ' ', show_tone_marks=True) for w in four_words.split(' ')]
     split_four(out)
     # out = [p.get_pinyin(w, ' ', show_tone_marks=True) for w in twice_words.split(' ')]
