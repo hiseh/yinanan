@@ -14,11 +14,13 @@ __datetime__ = 2017 / 3 / 4
 #             '山羊 羊肉 吃惊 拐弯 拐角 弯曲 弯路 垂挂 垂直 低垂 吃亏 理亏 花狗 狗肉 星期 期待 学期 刚才 刚好 漂亮 漂流 漂白 约定 '
 #             '节约 汽车 汽油 等待 等候 车票 门票 失信 丢失 失约 任务 灰色 灰兔 早晨 清晨 做操 早操 机遇 相遇 失误 误会 咱们 顺路 '
 #             '顺利 顺心 帝国 帝王 朝阳 朝气 岸边 海岸 啼哭 啼叫 小舟 轻舟 南方 南瓜 应该 虽然 关系 系列 担心 分担 对错 错字 越过 '
-#             '越冬 依靠 靠近 初中 初步 跑步 船员 船只 比较 计较 内外 内心 科学 科目')
-# unit_1_7 = ('一声不吭 一言不发 一声不响 一丝不苟 登门求教 沉甸甸 走走停停 悄悄话 静悄悄 晴空万里 惊天动地 惊弓之鸟 目瞪口呆 不期而遇 ')
+#             '越冬 依靠 靠近 初中 初步 跑步 船员 船只 比较 计较 内外 内心 科学 科目 部队 部分 最后 最近 通知 通过 沙石 沙包 沙发 '
+#             '风景 景色 爬山 爬行 古诗 诗歌')
+# unit_1_7 = ('一声不吭 一言不发 一声不响 一丝不苟 登门求教 沉甸甸 走走停停 悄悄话 静悄悄 晴空万里 惊天动地 惊弓之鸟 目瞪口呆 '
+#             '不期而遇 诗情画意 ')
 
 twice_words = ('')
-four_words = ('')
+four_words = ('安安')
 
 
 def split_twice(pinyin):
@@ -40,8 +42,8 @@ def print_unicode(chars):
 if __name__ == '__main__':
     # print(len(twice_words.split(' ')))
     p = Pinyin()
-    # out = [p.get_pinyin(w, ' ', show_tone_marks=True) for w in four_words.split(' ')]
-    # split_four(out)
-    out = [p.get_pinyin(w, ' ', show_tone_marks=True) for w in twice_words.split(' ')]
-    split_twice(out)
+    out = [p.get_pinyin(w, ' ', show_tone_marks=True) for w in four_words.split(' ')]
+    split_four(out)
+    # out = [p.get_pinyin(w, ' ', show_tone_marks=True) for w in twice_words.split(' ')]
+    # split_twice(out)
     # print_unicode(['应', '担'])
