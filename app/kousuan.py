@@ -1,12 +1,55 @@
+import re
 from datetime import datetime
 from random import randint
 from unittest import TestCase
+from enum import IntEnum
 
 __author__ = 'hisehyin'
 __datetime__ = '15/12/25 上午10:50'
 
 
+OPTION_SIGN = {0: '+', 1: '-', 2: '*', 3: '/'}
+
+OPTION_PRINT = {'+': ' + ', '-': ' - ', '*': ' × ', '/': ' ÷ '}
+
+
 class KouSuan:
+    @staticmethod
+    def gen_kousuan_questions(total, max_):
+        """
+        口算题，加减乘除
+        :param total: 
+        :param min_0: 
+        :return: 
+        """
+        questions = 0
+        regex = re.compile(r'\D')
+        while questions < total:
+            option = OPTION_SIGN[randint(0, 3)]
+            if option == '*':
+                question = '{num1}{option}{num2}'.format(num1=randint(0, 9),
+                                                         option=option,
+                                                         num2=randint(0, 9))
+            elif option == '/':
+                question = '{num1}{option}{num2}'.format(num1=randint(0, max_),
+                                                         option=option,
+                                                         num2=randint(1, 9))
+            else:
+                question = '{num1}{option}{num2}'.format(num1=randint(0, max_),
+                                                         option=option,
+                                                         num2=randint(0, max_))
+            result = eval(question)
+            if 0 <= result:
+                if option == '/' and not 1 < result < 10:
+                    continue
+                elif option == '*' and result < 10:
+                    continue
+
+                questions += 1
+                option_print = OPTION_PRINT[str(option)]
+                question = regex.sub(option_print, question)
+                yield question + ' ='
+
     @staticmethod
     def gen_add_sub_questions(total, max_, min_=0, three_element_percent=0, add_carry=False, sub_carry=False):
         """
@@ -51,6 +94,11 @@ class Test(TestCase):
         print(datetime.now() - self.start)
 
     def test_simple_question(self):
-        result = KouSuan.gen_add_sub_questions(self.total, self.max, 10, 0, True, True)
+        result = KouSuan.gen_add_sub_questions(self.total, 1000, 10, 0, True, True)
         for i, e in enumerate(result):
             print(e)
+
+    def test_kousuan(self):
+        result = KouSuan.gen_kousuan_questions(20, 100)
+        for i, e in enumerate(result):
+            print(i, e)

@@ -29,6 +29,14 @@ class Excel:
         return wb.save(filename=file_path)
 
 
+class Table:
+    @staticmethod
+    def kousuan():
+        questions = KouSuan.gen_kousuan_questions(120, 100)
+        for e in zip(*[iter(set(questions))] * 5):
+            print('\t'.join(e))
+
+
 class Test(TestCase):
     def setUp(self):
         self.start = datetime.now()
@@ -39,3 +47,6 @@ class Test(TestCase):
     def test_excel_output(self):
         result = Excel.output('/Users/hiseh/temp/an.xlsx', KouSuan.gen_add_sub_questions(1200, 100, 9, 0, True, True))
         print(result)
+
+    def test_table_kousuan(self):
+        Table.kousuan()
