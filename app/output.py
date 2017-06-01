@@ -32,7 +32,7 @@ class Excel:
 class Table:
     @staticmethod
     def kousuan():
-        questions = KouSuan.gen_kousuan_questions(120, 100)
+        questions = KouSuan.gen_kousuan_questions(110, 100)
         for e in zip(*[iter(set(questions))] * 5):
             print('\t'.join(e))
 

@@ -39,7 +39,7 @@ class KouSuan:
                                                          option=option,
                                                          num2=randint(0, max_))
             result = eval(question)
-            if 0 <= result:
+            if 0 <= result < max_ + 15:
                 if option == '/' and not 1 < result < 10:
                     continue
                 elif option == '*' and result < 10:
