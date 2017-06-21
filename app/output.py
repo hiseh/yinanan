@@ -1,32 +1,11 @@
-from openpyxl import Workbook
+import sys
+
 from datetime import datetime
 from unittest import TestCase
-from app.kousuan import KouSuan
+from kousuan import KouSuan
 
 __author__ = 'hisehyin'
 __datetime__ = '15/12/25 下午4:46'
-
-
-class Excel:
-    @staticmethod
-    def grouped(iterable, n):
-            return zip(*[iter(iterable)] * n)
-
-    @staticmethod
-    def output(file_path, questions):
-        """
-        输出成excel
-        :param file_path:
-        :param questions:
-        :return:
-        """
-        wb = Workbook()
-        ws = wb.create_sheet(title='questions')
-        for i, e in enumerate(Excel.grouped(questions, 5)):
-            for c, q in enumerate(e):
-                ws['{column}{line}'.format(column=''.join(chr(65 + c)), line=i + 1)] = q
-
-        return wb.save(filename=file_path)
 
 
 class Table:
@@ -42,6 +21,13 @@ class Table:
         for e in zip(*[iter(set(questions))] * 4):
             print('\t'.join(e))
 
+if __name__ == '__main__':
+    args = sys.argv[1:]
+    if '-kousuan' in args:
+        Table.kousuan()
+    elif '-shushi' in args:
+        Table.shushi()
+
 
 class Test(TestCase):
     def setUp(self):
@@ -49,10 +35,6 @@ class Test(TestCase):
 
     def tearDown(self):
         print(datetime.now() - self.start)
-
-    def test_excel_output(self):
-        result = Excel.output('/Users/hiseh/temp/an.xlsx', KouSuan.gen_add_sub_questions(1200, 100, 9, 0, True, True))
-        print(result)
 
     def test_table_kousuan(self):
         Table.kousuan()
