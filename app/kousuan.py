@@ -51,6 +51,37 @@ class KouSuan:
                 yield question + ' ='
 
     @staticmethod
+    def gen_multiplication_division(total, max_arg1, max_arg2, min_=1, min_arg1=1, min_arg2=1):
+        """
+        生成乘除法计算题
+        :param total: 题目总数
+        :param max_arg1: 第一位最大运算数
+        :param max_arg2: 第2位最大运算数
+        :param min_arg1: 第一位最小运算数
+        :param min_arg2: 第2位最小运算数
+        :param min_: 结果下限
+        """
+        questions = 0
+        regex = re.compile(r'\D')
+        while questions < total:
+            option = OPTION_SIGN[randint(2, 3)]
+            if randint(1, 100) & 1 == 0:
+                question = '{num1}{option}{num2}'.format(num1=randint(min_arg1, max_arg1),
+                                                         option='*',
+                                                         num2=randint(min_arg2, max_arg2))
+            else:
+                question = '{num1}{option}{num2}'.format(num1=randint(min_arg1, max_arg1),
+                                                         option='/',
+                                                         num2=randint(min_arg2, max_arg2))
+
+            result = eval(question)
+            if min_ <= result:
+                questions += 1
+                option_print = OPTION_PRINT[str(option)]
+                question = regex.sub(option_print, question)
+                yield question + ' ='
+
+    @staticmethod
     def gen_add_sub_questions(total, max_, min_=0, three_element_percent=0, add_carry=False, sub_carry=False):
         """
         生成加减计算题
@@ -83,6 +114,18 @@ class KouSuan:
                         yield question + ' = '
                         questions += 1
 
+    @staticmethod
+    def gen_3_questions(total, max_1, max_2):
+        """
+        乘除法计算题
+        :param total:
+        :param max_1:
+        :param max_2:
+        :return:
+        """
+        questions = 0
+        pass
+
 
 class Test(TestCase):
     def setUp(self):
@@ -93,12 +136,17 @@ class Test(TestCase):
     def tearDown(self):
         print(datetime.now() - self.start)
 
-    def test_simple_question(self):
-        result = KouSuan.gen_add_sub_questions(self.total, 1000, 10, 0, True, True)
-        for i, e in enumerate(result):
-            print(e)
+    # def test_simple_question(self):
+    #     result = KouSuan.gen_add_sub_questions(self.total, 1000, 10, 0, True, True)
+    #     for i, e in enumerate(result):
+    #         print(e)
 
-    def test_kousuan(self):
-        result = KouSuan.gen_kousuan_questions(20, 100)
-        for i, e in enumerate(result):
-            print(i, e)
+    # def test_kousuan(self):
+    #     result = KouSuan.gen_kousuan_questions(20, 100)
+    #     for i, e in enumerate(result):
+    #         print(i, e)
+    
+    def test_gen_multiplication_division(self):
+        result = KouSuan.gen_multiplication_division(total=200, max_arg1=99, max_arg2=10, min_arg1=20,  min_arg2=3, min_=10)
+        for e in zip(*[result] * 5):
+            print('\t'.join(e))
