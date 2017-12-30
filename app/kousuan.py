@@ -15,6 +15,29 @@ OPTION_PRINT = {'+': ' + ', '-': ' - ', '*': ' × ', '/': ' ÷ '}
 
 class KouSuan:
     @staticmethod
+    def gen_float_questions(total):
+        '''
+        口算题，小数加减
+        '''
+        questions = 0
+        regex = re.compile(r'[^0-9\.]')
+        while questions < total:
+            num1, num2 = randint(15, 1000) / 10, randint(15, 1000) / 10
+            if num1.is_integer() or num2.is_integer():
+                continue
+            option = OPTION_SIGN[randint(0, 1)]
+            question = '{num1}{option}{num2}'.format(num1=num1, num2=num2, option=option)
+
+            result = eval(question)
+            if result > 0:
+                questions += 1
+                option_print = OPTION_PRINT[str(option)]
+                question = regex.sub(option_print, question)
+                yield question + ' ='
+
+
+
+    @staticmethod
     def gen_kousuan_questions(total, max_):
         """
         口算题，加减乘除

@@ -11,13 +11,14 @@ __datetime__ = '15/12/25 下午4:46'
 class Table:
     @staticmethod
     def kousuan():
-        questions = KouSuan.gen_kousuan_questions(110, 100)
+        # questions = KouSuan.gen_kousuan_questions(110, 100)
+        questions = KouSuan.gen_float_questions(110)
         for e in zip(*[iter(set(questions))] * 5):
             print('\t'.join(e))
 
     @staticmethod
     def shushi():
-        questions = KouSuan.gen_add_sub_questions(total=24, max_=1000, add_carry=True, sub_carry=True)
+        questions = KouSuan.gen_add_sub_questions(total=24, max_=1000, min_=100, add_carry=True, sub_carry=True)
         for e in zip(*[iter(set(questions))] * 4):
             print('\t'.join(e))
 

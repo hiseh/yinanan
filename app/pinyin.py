@@ -21,14 +21,18 @@ unit4_1_3 = ('绿油油 乘风破浪 一本正经 引人注目 成群结队')
 word_2 = ('盛产 月份 秋季 暗红 吃够 制作 架子 成熟 好客 小镇 挺满 石桥 桥洞 摆满 拔出 油菜 露珠 丝绸 安静 欢闹 热情 安安 岸岸 按按 暗暗')
 word_4 = ('葡萄沟 五光十色')
 
+error_2_words = ('温暖 休闲 乘客 拥挤 发觉 鼓励 懂得 待遇 掌声 掌握 清泉 映照 摔倒 召唤 呼唤 惊慌 充数 起航 熟悉 盛产 制作 停止 '
+                 '安安 岸岸 按按')
+error_4_words = ('乘风破浪 掩耳盗铃 装腔作势 绿油油')
+
 
 def split_twice(pinyin):
-    for e in zip(*[iter(set(pinyin))] * 5):
+    for e in zip(*[iter(list(pinyin))] * 5):
         print('\t'.join(e))
 
 
 def split_four(pinyin):
-    for e in zip(*[iter(set(pinyin))] * 2):
+    for e in zip(*[iter(list(pinyin))] * 2):
         print('\t\t'.join(e))
 
 
@@ -39,9 +43,9 @@ def print_unicode(chars):
 
 
 if __name__ == '__main__':
-    # print(len(word_2.split(' ')))
+    # print(len(error_2_words.split(' ')))
     p = Pinyin()
-    out = [p.get_pinyin(w, ' ', show_tone_marks=True) for w in word_4.split(' ')]
+    out = [p.get_pinyin(w, ' ', show_tone_marks=True) for w in set(error_4_words.split(' '))]
     split_four(out)
     # split_twice(out)
     # print_unicode(['应', '担'])
