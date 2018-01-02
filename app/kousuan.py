@@ -1,8 +1,10 @@
 import re
+import math
 from datetime import datetime
-from random import randint
+from random import randint, random
 from unittest import TestCase
 from enum import IntEnum
+from functools import partial
 
 __author__ = 'hisehyin'
 __datetime__ = '15/12/25 上午10:50'
@@ -14,11 +16,23 @@ OPTION_PRINT = {'+': ' + ', '-': ' - ', '*': ' × ', '/': ' ÷ '}
 
 
 class KouSuan:
+    '''
+    小学1~3年级数学口算题
+    '''
     @staticmethod
-    def gen_float_questions(total):
+    def gen_float_questions(total, carry=False, percent=1):
         '''
         口算题，小数加减
+        :param total: 题目数量
+        :param carry: 是否允许进退位
+        :param percent: 进退位问题比例
         '''
+        def __check_carry(option_, num1_, num2_):
+            return {
+                '-': lambda *args: math.modf(args[0])[0] < math.modf(args[1])[0],
+                '+': lambda *args: math.modf(args[0])[0] + math.modf(args[1])[0] > 1
+            }[option_](num1_, num2_)
+
         questions = 0
         regex = re.compile(r'[^0-9\.]')
         while questions < total:
@@ -26,7 +40,20 @@ class KouSuan:
             if num1.is_integer() or num2.is_integer():
                 continue
             option = OPTION_SIGN[randint(0, 1)]
-            question = '{num1}{option}{num2}'.format(num1=num1, num2=num2, option=option)
+            check_carry_ = partial(__check_carry, option_=option, num1_=num1, num2_=num2)
+            if not carry:
+                if check_carry_():
+                    continue
+            else:
+                if random() < percent:
+                    if not check_carry_():
+                        continue
+                else:
+                    if check_carry_():
+                        continue
+
+            question = '{num1}{option}{num2}'.format(
+                num1=num1, num2=num2, option=option)
 
             result = eval(question)
             if result > 0:
@@ -34,8 +61,6 @@ class KouSuan:
                 option_print = OPTION_PRINT[str(option)]
                 question = regex.sub(option_print, question)
                 yield question + ' ='
-
-
 
     @staticmethod
     def gen_kousuan_questions(total, max_):
@@ -168,8 +193,9 @@ class Test(TestCase):
     #     result = KouSuan.gen_kousuan_questions(20, 100)
     #     for i, e in enumerate(result):
     #         print(i, e)
-    
+
     def test_gen_multiplication_division(self):
-        result = KouSuan.gen_multiplication_division(total=200, max_arg1=99, max_arg2=10, min_arg1=20,  min_arg2=3, min_=10)
+        result = KouSuan.gen_multiplication_division(
+            total=200, max_arg1=99, max_arg2=10, min_arg1=20,  min_arg2=3, min_=10)
         for e in zip(*[result] * 5):
             print('\t'.join(e))
