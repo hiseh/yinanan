@@ -12,7 +12,7 @@ class Table:
     @staticmethod
     def kousuan():
         # questions = KouSuan.gen_kousuan_questions(110, 100)
-        questions = KouSuan.gen_float_questions(110, carry=True, percent=0.2)
+        questions = KouSuan.gen_float_questions(110, carry=True, percent=0.1)
         for e in zip(*[iter(set(questions))] * 5):
             print('\t'.join(e))
 

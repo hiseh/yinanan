@@ -36,7 +36,7 @@ class KouSuan:
         questions = 0
         regex = re.compile(r'[^0-9\.]')
         while questions < total:
-            num1, num2 = randint(15, 1000) / 10, randint(15, 1000) / 10
+            num1, num2 = randint(15, 200) / 10, randint(15, 200) / 10
             if num1.is_integer() or num2.is_integer():
                 continue
             option = OPTION_SIGN[randint(0, 1)]
